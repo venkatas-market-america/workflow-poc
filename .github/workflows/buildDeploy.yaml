@@ -1,0 +1,93 @@
+name: 'Build and Deploy'
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: 'Build'
+    runs-on: ubuntu-latest
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash    
+    
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.13'
+    
+    - name: Install dependencies
+      run: yarn install
+
+    - name: Build - Dev
+      if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/master'
+      run: echo "dev"
+
+    - name: Build - Stg
+      if: github.ref == 'refs/heads/staging'
+      run: echo "stg"
+
+    - name: Build - Prd
+      if: github.ref == 'refs/heads/master'
+      run: "prd"
+      
+  plan:
+    name: 'Terraform - Plan'
+    runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/develop' && github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/master'
+    needs: build
+    strategy:
+      matrix:
+        environment: [dev, stg, prd]
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Plan
+      run: echo ${{ matrix.environment }}
+
+  deploy:
+    name: 'Deploy'
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/staging' || github.ref == 'refs/heads/master'
+    needs: build
+    
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Terraform Apply - DEV
+      if: github.ref == 'refs/heads/develop' && ( github.event_name == 'push' || github.event_name == 'workflow_dispatch' )
+      run: echo "dev"
+
+    - name: Terraform Apply - STG
+      if: github.ref == 'refs/heads/staging' && ( github.event_name == 'push' || github.event_name == 'workflow_dispatch' )
+      run: echo "stg"
+
+    - name: Terraform Apply - PRD
+      if: github.ref == 'refs/heads/master' && ( github.event_name == 'push' || github.event_name == 'workflow_dispatch' )
+      run: echo "prd"
