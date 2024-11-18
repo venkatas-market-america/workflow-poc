@@ -19,9 +19,6 @@ jobs:
   cloudfront-cache-reload:
     name: 'CloudFront Cache Reload'
     runs-on: ubuntu-latest
-    # strategy:
-    #   matrix:
-    #     environment: [dev, stg, prd]
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -36,12 +33,21 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-    - name: Clear STG Cloudfront Cache
-      if: ${{ inputs.environment == 'stg' }} 
-      run: |
-        aws cloudfront create-invalidation --distribution-id E3KPLJ5X7H3S0K --path "/*"
+    - name: Test multiple github events
+      if: github.ref == 'refs/heads/main' && ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
+      run: echo "tested"
 
-    - name: Clear PRD Cloudfront Cache
-      if: ${{ inputs.environment  ==  'prd' }}
-      run: |
-        aws cloudfront create-invalidation --distribution-id E3A19M3VB6FKRR --path "/*"
+    # - name: Clear DEV Cloudfront Cache
+    #   if: ${{ inputs.environment  ==  'dev' }}
+    #   run: |
+    #     aws cloudfront create-invalidation --distribution-id E2YRQUWMTP7ZVO --path "/*"
+
+    # - name: Clear STG Cloudfront Cache
+    #   if: ${{ inputs.environment == 'stg' }} 
+    #   run: |
+    #     aws cloudfront create-invalidation --distribution-id E3KPLJ5X7H3S0K --path "/*"
+
+    # - name: Clear PRD Cloudfront Cache
+    #   if: ${{ inputs.environment  ==  'prd' }}
+    #   run: |
+    #     aws cloudfront create-invalidation --distribution-id E3A19M3VB6FKRR --path "/*"
