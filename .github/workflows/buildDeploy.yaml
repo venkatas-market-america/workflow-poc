@@ -42,11 +42,11 @@ jobs:
     - name: Build - Prd
       if: github.ref == 'refs/heads/master'
       run: "prd"
-      
+
   plan:
     name: 'Terraform - Plan'
     runs-on: ubuntu-latest
-    if: github.ref != 'refs/heads/develop' && github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/master'
+    if: github.ref != 'refs/heads/develop' && github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/main'
     needs: build
     strategy:
       matrix:
@@ -68,7 +68,7 @@ jobs:
   deploy:
     name: 'Deploy'
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/staging' || github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/staging' || github.ref == 'refs/heads/main'
     needs: build
     
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
