@@ -89,5 +89,5 @@ jobs:
       run: echo "stg"
 
     - name: Terraform Apply - PRD
-      if: github.ref == 'refs/heads/master' && ( github.event_name == 'push' || github.event_name == 'workflow_dispatch' )
+      if: github.ref == 'refs/heads/main' && ( github.event_name == 'push' || github.event_name == 'workflow_dispatch' )
       run: echo "prd"
