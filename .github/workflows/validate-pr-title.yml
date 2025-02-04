@@ -16,5 +16,4 @@ jobs:
         with:
           projectKey: |
             'RT'
-            'AI'
           keyAnywhereInTitle: 'true'
