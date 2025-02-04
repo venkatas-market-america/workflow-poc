@@ -14,4 +14,7 @@ jobs:
       - name: Enforce Jira Issue Key in Pull Request Title
         uses: ryanvade/enforce-pr-title-style-action@v2.1.2
         with:
-          projectKey: 'RT'
+          projectKey: |
+            'RT'
+            'AI'
+          keyAnywhereInTitle: 'true'
