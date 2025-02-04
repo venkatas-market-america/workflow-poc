@@ -15,4 +15,3 @@ jobs:
         uses: ryanvade/enforce-pr-title-style-action@v2.1.2
         with:
           projectKey: 'RT'
-          keyAnywhereInTitle: 'true'
