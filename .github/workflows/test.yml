@@ -1,0 +1,14 @@
+name: Validate PR Title
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: ref
+        run: echo ${{ github.ref }}
