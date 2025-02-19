@@ -19,3 +19,5 @@ jobs:
           echo ${{ github.action_status }}
           echo ${{ github.run_number }}
           echo ${{ github.run_id }}
+          echo ${{ github.event }}
+          echo ${{ github.event_name }}
