@@ -18,4 +18,4 @@ jobs:
           echo ${{ github.action_ref }}
           echo ${{ github.action_status }}
           echo ${{ github.run_number }}
-          echo ${{ github.action_status }}
+          echo ${{ github.run_id }}
