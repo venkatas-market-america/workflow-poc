@@ -11,4 +11,11 @@ jobs:
         uses: actions/checkout@v4
 
       - name: ref
-        run: echo ${{ github.ref }}
+        run: |
+          echo ${{ github.ref }}
+          echo ${{ github.action }}
+          echo ${{ github.action_path }}
+          echo ${{ github.action_ref }}
+          echo ${{ github.action_status }}
+          echo ${{ github.run_number }}
+          echo ${{ github.action_status }}
