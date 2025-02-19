@@ -23,3 +23,4 @@ jobs:
           echo ${{ github.event }}
           echo ${{ github.event_name }}
           echo ${{ github.sha }}
+          echo ${{ github.triggering_actor }}
