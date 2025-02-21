@@ -20,7 +20,7 @@ jobs:
           echo ${{ github.run_number }}
           echo ${{ github.run_id }}
           echo ${{ github.run_attempt }}
-          echo ${{ github.event }}
+          echo ${{ github.event.head_commit.message }}
           echo ${{ github.event_name }}
           echo ${{ github.sha }}
           echo ${{ github.triggering_actor }}
