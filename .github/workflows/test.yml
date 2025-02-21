@@ -18,10 +18,10 @@ jobs:
           echo ${{ github.action_ref }}
           echo ${{ github.action_status }}
           echo ${{ github.run_number }}
-          echo ${{ github.run_id }}
-          echo ${{ github.run_attempt }}
-          echo ${{ github.event.head_commit.message }}
-          echo ${{ github.event_name }}
-          echo ${{ github.sha }}
-          echo ${{ github.triggering_actor }}
+          echo "${{ github.run_id }}"
+          echo "${{ github.run_attempt }}"
+          echo "${{ github.event.head_commit.message }}"
+          echo "${{ github.event_name }}"
+          echo "${{ github.sha }}"
+          echo "${{ github.triggering_actor }}"
           echo "${{ toJson(github) }}"
