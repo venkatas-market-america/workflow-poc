@@ -36,6 +36,6 @@ jobs:
       - name: Terraform Commands
         run: |
           terraform init
-          terraform plan -var "github_event=${{ github.event }}"
+          terraform plan -var "github_event=${{ toJson(github.event) }}"
         # env:
         #   TF_VAR_github_event="${{ github.event.head_commit.message }}"
