@@ -36,7 +36,6 @@ jobs:
       - name: Terraform Commands
         run: |
           terraform init
-          terraform validate
-          terraform plan
-        env:
-          TF_VAR_github_event="${{ github.event.head_commit.message }}"
+          terraform plan -var github_event=${{ github.event.head_commit.message }}
+        # env:
+        #   TF_VAR_github_event="${{ github.event.head_commit.message }}"
