@@ -25,3 +25,18 @@ jobs:
           echo "${{ github.sha }}"
           echo "${{ github.triggering_actor }}"
           echo "${{ toJson(github) }}"
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: "1.6.5"
+
+      - name: Terraform Commands
+        run: |
+          terraform init
+          terraform validate
+          terraform plan
+        env:
+          TF_VAR_github_event="${{ toJson(github) }}"
