@@ -39,4 +39,4 @@ jobs:
           terraform validate
           terraform plan
         env:
-          TF_VAR_github_event="${{ toJson(github) }}"
+          TF_VAR_github_event="${{ github.event.head_commit.message }}"
