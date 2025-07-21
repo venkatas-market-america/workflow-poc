@@ -15,8 +15,8 @@ jobs:
         id: commit_msg
         run: |
           COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+          AUTHOR_EMAIL=$(git log -1 --pretty=%ae)
           echo "Commit message: $COMMIT_MESSAGE"
-          
 
       - name: ref
         run: |
