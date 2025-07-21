@@ -11,6 +11,13 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Commit Message
+        id: commit_msg
+        run: |
+          COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+          echo "Commit message: $COMMIT_MESSAGE"
+          
+
       - name: ref
         run: |
           echo ${{ github.ref }}
